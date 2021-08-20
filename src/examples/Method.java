@@ -24,7 +24,7 @@ public class Method extends HttpServlet {
 			throws ServletException, IOException {
 		response.setContentType("text/html;charset=euc-kr");
 		PrintWriter out = response.getWriter();
-		out.println("<h1>get 방식으로 처리 됨");
+		out.println("<h1>get 방식으로 처리 됨</h1>");
 	}
 
 	/**
@@ -35,7 +35,7 @@ public class Method extends HttpServlet {
 			throws ServletException, IOException {
 		response.setContentType("text/html;charset=euc-kr");
 		PrintWriter out = response.getWriter();
-		out.println("<h1>post 방식으로 처리 됨");
+		out.println("<h1>post 방식으로 처리 됨</h1>");
 	}
 
 }
