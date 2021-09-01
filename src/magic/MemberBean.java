@@ -1,6 +1,7 @@
 package magic;
 
 public class MemberBean {
+	// 변수명 같아야 함
 	private String id, pw, name;
 	private int mclass;
 	private String phone1, phone2, phone3;
