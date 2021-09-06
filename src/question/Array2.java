@@ -1,31 +1,34 @@
 package question;
 
-import java.util.Arrays;
-
-public class Array {
+public class Array2 {
 	private int[] num = new int[5];
 	private int num1, num2, num3, num4, num5;
 
-	public int process() {
+	public String process() {
+		StringBuffer result = new StringBuffer();
+		
+		for (int i = 0; i < num.length; i++) {
+			if (num[i] % 3 == 0) {
+				result.append(num[i] + " ");
+			}
+		}
+		
+		return result.toString();
+	}
+
+	public String process(int[] array) {
+		for (int i = 0; i < array.length; i++) {
+			num[i] = array[i];
+		}
+		return process();
+	}
+	
+	public void setNum() {
 		num[0] = num1;
 		num[1] = num2;
 		num[2] = num3;
 		num[3] = num4;
 		num[4] = num5;
-		Arrays.sort(num);
-		return num[4];
-	}
-
-	public int process(int[] array) {
-		int max = Integer.MIN_VALUE;
-
-		for (int i = 0; i < array.length; i++) {
-			if (array[i] > max) {
-				max = array[i];
-			}
-		}
-
-		return max;
 	}
 
 	public int getNum1() {
