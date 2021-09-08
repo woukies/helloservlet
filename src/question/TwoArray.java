@@ -20,7 +20,24 @@ public class TwoArray {
 
 	public String process(int num) {
 		setNum(num);
-		return process();
+
+		StringBuffer result = new StringBuffer();
+		int[][] array = new int[this.num][this.num];
+
+		for (int i = 0; i < array.length; i++) {
+			for (int j = 0; j < array[i].length; j++) {
+				array[i][j] = (int) (Math.random() * 10 + 1);
+			}
+		}
+		
+		for (int i = 0; i < array.length; i++) {
+			for (int j = 0; j < array[i].length; j++) {
+				result.append(array[i][j] + "&nbsp;&nbsp;&nbsp;");
+			}
+			result.append("<br>");
+		}
+		
+		return result.toString();
 	}
 
 	public int getNum() {
