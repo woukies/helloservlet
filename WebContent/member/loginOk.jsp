@@ -17,18 +17,14 @@
 	} else {
 		if (isLogin == 1) { 
 		    //세션에 사용자 정보 추가후 main.jsp 로 이동
-		    session.setAttribute("id", mb.getM_id());
-		    session.setAttribute("name", mb.getM_name());
-%>
-			<script>
-			    document.location.href = "main.jsp";
-			</script>
-<%
+		    session.setAttribute("uid", mb.getM_id());
+		    session.setAttribute("uname", mb.getM_name());
+		    response.sendRedirect("main.jsp"); // document.location.href = "main.jsp";
 		} else if (isLogin == 0) { 	
 %>
 			<script>
 				alert("비밀번호가 맞지 않습니다.");
-				history.back();
+				history.go(-1); // history.back();
 			</script>
 <%
 		} else {

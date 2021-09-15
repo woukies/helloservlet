@@ -28,7 +28,7 @@ public class MemberDBBean {
 	public int insertMember(MemberBean member) throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		int isDone = -1;
+		int isInsert = -1;
 
 		String query = "INSERT INTO membert VALUES(?, ?, ?, ?, ?, ?)";
 
@@ -43,7 +43,7 @@ public class MemberDBBean {
 			pstmt.setString(6, HanConv.toKor(member.getM_addr()));
 			pstmt.executeUpdate();
 
-			isDone = 1;
+			isInsert = 1;
 			System.out.println(">> 추가 성공");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -57,7 +57,7 @@ public class MemberDBBean {
 			}
 		}
 
-		return isDone;
+		return isInsert;
 	}
 
 	public int confirmID(String id) throws Exception {
@@ -175,4 +175,36 @@ public class MemberDBBean {
 		return member;
 	}
 
+	/* 회원 정보 수정 */
+	public int updateMember(MemberBean member) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int isUpdate = -1;
+		
+		String query = "UPDATE membert SET mem_pwd = ?, mem_email = ?, mem_address = ? WHERE mem_uid = ?";
+		
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, member.getM_pw());
+			pstmt.setString(2, member.getM_email());
+			pstmt.setString(3, HanConv.toKor(member.getM_addr()));
+			pstmt.setString(4, member.getM_id());
+			isUpdate = pstmt.executeUpdate();
+			
+			// System.out.println(">> 수정 성공");
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(">> 수정 실패");
+		} finally {
+			if (pstmt != null) {
+				pstmt.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
+		}	
+		
+		return isUpdate;
+	}
 }
