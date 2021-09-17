@@ -6,15 +6,12 @@
 
 <%
 	BoardDBBean manager = BoardDBBean.getInstance();
-	int isWrite = manager.insertBoard(board);
 	
-	if (isWrite == 1) {
-%>
-		성공
-<%		
+	if (manager.insertBoard(board) == 1) {
+		response.sendRedirect("list.jsp");
 	} else {
 %>
-		실패
+		history.go(-1);
 <%
 	}
 %>
