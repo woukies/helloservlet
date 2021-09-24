@@ -17,5 +17,11 @@ function check_ok() {
         return;
 	}
 	
+	if (document.writeForm.b_pwd.value.length == 0) {
+		alert("비밀번호를 써주세요.");
+        document.writeForm.b_pwd.focus();
+        return;
+	}
+	
 	document.writeForm.submit();
 }
