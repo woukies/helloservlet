@@ -25,3 +25,13 @@ function check_ok() {
 	
 	document.writeForm.submit();
 }
+
+function delete_ok() {
+	if (document.deleteForm.b_pwd.value.length == 0) {
+		alert("비밀번호를 써주세요.");
+        document.deleteForm.b_pwd.focus();
+        return;
+	}
+	
+	document.deleteForm.submit();
+}

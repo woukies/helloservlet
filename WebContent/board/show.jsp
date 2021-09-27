@@ -6,7 +6,7 @@
 <%
 	int b_id = Integer.parseInt(request.getParameter("b_id"));
 	BoardDBBean manager = BoardDBBean.getInstance();
-	BoardBean board = manager.getBoard(b_id);
+	BoardBean board = manager.getBoard(b_id, true);
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 %>
 <!DOCTYPE html>
@@ -39,8 +39,15 @@
 				<th>글 제목</th>
 				<td colspan="3" align="left"><%= board.getB_title() %></td>
 			</tr>
-			<tr height="30" align="center">
+			<tr height="30">
 				<td colspan="4" align="left"><pre><%= board.getB_content() %></pre></td>
+			</tr>
+			<tr height="30">
+				<td colspan="4" align="right">
+					<input type="button" value="글수정" onclick="location.href='edit.jsp?b_id=<%= b_id %>'">
+					<input type="button" value="글삭제" onclick="location.href='delete.jsp?b_id=<%= b_id %>'">
+   	            	<input type="button" value="글목록" onclick="location.href='list.jsp'">
+				</td>
 			</tr>
 		</table>
 	</center>
