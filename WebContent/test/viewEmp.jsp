@@ -11,14 +11,12 @@
 	Statement stmt = null;
 	ResultSet rs = null;
 	ResultSetMetaData rsmd = null;
-	
-	String query = "SELECT * from emp";
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="EUC-KR">
-<title>Insert title here</title>
+<title>사원 테이블 조회</title>
 </head>
 <body>
 	<table border="1">
@@ -26,7 +24,8 @@
 			try {
 				conn = ((DataSource) (new InitialContext().lookup("java:comp/env/jdbc/oracle"))).getConnection();
 				stmt = conn.createStatement();
-				rs = stmt.executeQuery(query);
+				rs = stmt.executeQuery("SELECT * from professor");
+				// String[] emp = { "사원번호", "사원명", "직급", "상관번호", "입사일자", "급여", "커미션", "부서번호" };
 				rsmd = rs.getMetaData();
 		%>
 			<tr>

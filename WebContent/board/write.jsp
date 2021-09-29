@@ -1,5 +1,21 @@
+<%@page import="magic.board.BoardBean"%>
+<%@page import="magic.board.BoardDBBean"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
+<%
+	int b_id = -1;
+	int b_ref = -1, b_step = 0, b_level = 0;
+	String b_title = "";
+	if(request.getParameter("b_id") != null) {
+		b_id = Integer.parseInt(request.getParameter("b_id"));
+		BoardDBBean manager = BoardDBBean.getInstance();
+		BoardBean board = manager.getBoard(b_id, false);
+		b_ref = board.getB_ref();
+		b_step = board.getB_step() + 1;
+		b_level = board.getB_level() + 1;
+		b_title = "[답변]:" + board.getB_title();
+	} 
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,7 +38,7 @@
 	            </tr>
 	            <tr height="30">
 	                <td width="80" align="right">글제목</td>
-	                <td colspan="3"><input type="text" name="b_title" size="60" maxlength="80"></td>
+	                <td colspan="3"><input type="text" name="b_title" value="<%= b_title %>" size="60" maxlength="80"></td>
 	            </tr>
 	            <tr>
 	                <td colspan="4"><textarea name="b_content" rows="20" cols="70"></textarea></td>
@@ -33,6 +49,9 @@
 	            </tr>
 	            <tr align="center">
 	                <td colspan="4">
+		                <input type="hidden" name="b_ref" value="<%= b_ref %>">
+		                <input type="hidden" name="b_step" value="<%= b_step %>">
+		                <input type="hidden" name="b_level" value="<%= b_level %>">
 	                	<input type="button" value="글쓰기" onclick="check_ok()">
 	                	<input type="reset" value="다시작성">
 	                	<input type="button" value="글목록" onclick="javascript:window.location='list.jsp'">

@@ -32,6 +32,7 @@ public class BoardDBBean {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		int boardNumber = 0;
+		int boardRef = 0;
 		int isInsert = -1;
 
 		try {
@@ -44,8 +45,24 @@ public class BoardDBBean {
 				boardNumber = 1;
 			}
 
+			boardRef = board.getB_ref();
+			if (boardRef == -1) { // 사용되지 않은 board.getB_id() 를 사용해서도 답글 여부 확인 가능
+				boardRef = boardNumber;
+			} else {
+				if (rs != null) {
+					rs.close();
+				}
+				rs = conn.prepareStatement("SELECT b_id, b_step FROM boardt WHERE b_ref = " + board.getB_ref()
+						+ " AND b_step >= " + board.getB_step()).executeQuery();
+				while (rs.next()) {
+					conn.prepareStatement("UPDATE boardt SET b_step = " + (rs.getInt("b_step") + 1) + " WHERE b_id = "
+							+ rs.getInt("b_id")).executeUpdate();
+				}
+			}
+
 			pstmt = conn.prepareStatement(
-					"INSERT INTO boardt (b_id, b_name, b_email, b_title, b_content, b_date, b_pwd) VALUES(?, ?, ?, ?, ?, ?, ?)");
+					"INSERT INTO boardt (b_id, b_name, b_email, b_title, b_content, b_date, b_pwd, b_ip, b_ref, b_step, b_level) "
+							+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 			pstmt.setInt(1, boardNumber);
 			pstmt.setString(2, HanConv.toKor(board.getB_name()));
 			pstmt.setString(3, board.getB_email());
@@ -53,6 +70,10 @@ public class BoardDBBean {
 			pstmt.setString(5, HanConv.toKor(board.getB_content()));
 			pstmt.setTimestamp(6, board.getB_date());
 			pstmt.setString(7, board.getB_pwd());
+			pstmt.setString(8, board.getB_ip());
+			pstmt.setInt(9, boardRef);
+			pstmt.setInt(10, board.getB_step());
+			pstmt.setInt(11, board.getB_level());
 			pstmt.executeUpdate();
 
 			isInsert = 1;
@@ -85,7 +106,7 @@ public class BoardDBBean {
 
 		try {
 			conn = getConnection();
-			rs = conn.createStatement().executeQuery("SELECT * FROM boardt ORDER BY b_id asc");
+			rs = conn.createStatement().executeQuery("SELECT * FROM boardt ORDER BY b_ref desc, b_step ASC");
 
 			while (rs.next()) {
 				BoardBean board = new BoardBean();
@@ -97,6 +118,10 @@ public class BoardDBBean {
 				board.setB_date(rs.getTimestamp("b_date"));
 				board.setB_hit(rs.getInt("b_hit"));
 				board.setB_pwd(rs.getString("b_pwd"));
+				board.setB_ip(rs.getString("b_ip"));
+				board.setB_ref(rs.getInt("b_ref"));
+				board.setB_step(rs.getInt("b_step"));
+				board.setB_level(rs.getInt("b_level"));
 
 				boards.add(board);
 			}
@@ -140,6 +165,10 @@ public class BoardDBBean {
 				board.setB_title(rs.getString("b_title"));
 				board.setB_content(rs.getString("b_content"));
 				board.setB_date(rs.getTimestamp("b_date"));
+				board.setB_ip(rs.getString("b_ip"));
+				board.setB_ref(rs.getInt("b_ref"));
+				board.setB_step(rs.getInt("b_step"));
+				board.setB_level(rs.getInt("b_level"));
 
 				int b_hit = rs.getInt("b_hit");
 				if (doHit) {

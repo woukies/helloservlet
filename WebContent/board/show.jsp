@@ -46,6 +46,7 @@
 				<td colspan="4" align="right">
 					<input type="button" value="글수정" onclick="location.href='edit.jsp?b_id=<%= b_id %>'">
 					<input type="button" value="글삭제" onclick="location.href='delete.jsp?b_id=<%= b_id %>'">
+					<input type="button" value="글답변" onclick="location.href='write.jsp?b_id=<%= b_id %>'">
    	            	<input type="button" value="글목록" onclick="location.href='list.jsp'">
 				</td>
 			</tr>

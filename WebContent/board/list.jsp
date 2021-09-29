@@ -48,7 +48,17 @@
 				onmouseout="this.style.backgroundColor='#f7f7f7'"
 				align="center">
 				<td><%= board.getB_id() %></td>	
-				<td align="left"><a href="show.jsp?b_id=<%= board.getB_id() %>"><%= board.getB_title() %></a></td>
+				<td align="left">
+					<% 
+						if(board.getB_level() > 0) {
+							for(int i = 0; i < board.getB_level(); i++) {
+								%>&nbsp;<%
+							}
+							%><img src="../res/AnswerLine.gif"><%
+						}
+					%>
+					<a href="show.jsp?b_id=<%= board.getB_id() %>"><%= board.getB_title() %></a>
+				</td>
 			<%
 					if (board.getB_email() != null) {
 			%>
