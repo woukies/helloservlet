@@ -2,7 +2,13 @@
 <%@page import="magic.board.BoardDBBean"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
-<%
+<%	
+	int b_page;
+	if(request.getParameter("b_page") == null) {
+		b_page = 1;
+	} else {
+		b_page = Integer.parseInt(request.getParameter("b_page"));
+	}
 	int b_id = -1;
 	int b_ref = -1, b_step = 0, b_level = 0;
 	String b_title = "";
@@ -54,7 +60,7 @@
 		                <input type="hidden" name="b_level" value="<%= b_level %>">
 	                	<input type="button" value="글쓰기" onclick="check_ok()">
 	                	<input type="reset" value="다시작성">
-	                	<input type="button" value="글목록" onclick="javascript:window.location='list.jsp'">
+	                	<input type="button" value="글목록" onclick="javascript:window.location='list.jsp?b_page=<%= b_page %>'">
 	                </td>
 	            </tr>
 	        </form>

@@ -6,8 +6,15 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 <%
+	int b_page;
+	int pageCount = 0;
+	if(request.getParameter("b_page") == null) {
+		b_page = 1;
+	} else {
+		b_page = Integer.parseInt(request.getParameter("b_page"));
+	}
 	BoardDBBean manager = BoardDBBean.getInstance();
-	ArrayList<BoardBean> boards = manager.listBoard();
+	ArrayList<BoardBean> boards = manager.listBoard(b_page);
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 %>
 <!DOCTYPE html>
@@ -18,21 +25,15 @@
 <style>
 	th,
 	td {
-		padding: 2px;
-	}
-	
-	caption {
-		text-align: right;
+		padding: 3px;
 	}
 </style>
 </head>
 <body>
 	<center>
 		<h1>게시판에 등록된 글 목록</h1>
+		<a href="write.jsp?b_page=<%= b_page %>" style="margin-left: 600px;">글 쓰 기</a>
 		<table border="1" cellspacing="0">
-			<caption>
-				<a href="write.jsp">글 쓰 기</a>
-			</caption>
 			<tr align="center">
 				<th width="80">번호</th>
 				<th width="450">글 제목</th>
@@ -57,7 +58,7 @@
 							%><img src="../res/AnswerLine.gif"><%
 						}
 					%>
-					<a href="show.jsp?b_id=<%= board.getB_id() %>"><%= board.getB_title() %></a>
+					<a href="show.jsp?b_id=<%= board.getB_id() %>&b_page=<%= b_page %>"><%= board.getB_title() %></a>
 				</td>
 			<%
 					if (board.getB_email() != null) {
@@ -77,6 +78,35 @@
 			%>
 			</tr>
 		</table>
+		<div>
+			<%	
+				int pageLast = (int) Math.ceil((double) BoardBean.boardCount/BoardBean.pageSize);
+				int pageCursor = b_page - ((b_page - 1) % BoardBean.pageButtons);
+				
+				if(pageCursor > 1) {
+					%><a href="list.jsp?b_page=<%= pageCursor - 1 %>">[이전]</a><%
+				}
+				for(int i = 0; i < BoardBean.pageButtons; i++) {
+					if (pageCursor != b_page) {
+						%>
+							<a href="list.jsp?b_page=<%= pageCursor %>">[<%= pageCursor %>]</a>
+						<%
+					} else {
+						%>
+						[<%= pageCursor %>]
+					<%
+					}
+					pageCursor++;
+					if(pageCursor > pageLast) {
+						break;
+					}
+				}
+				pageCursor--;
+				if(pageCursor < pageLast) {
+					%><a href="list.jsp?b_page=<%= pageCursor + 1 %>">[다음]</a><%
+				}
+			%>
+		</div>
 	</center>
 </body>
 </html>

@@ -99,14 +99,28 @@ public class BoardDBBean {
 		return isInsert;
 	}
 
-	public ArrayList<BoardBean> listBoard() throws Exception {
+	public ArrayList<BoardBean> listBoard(int b_page) throws Exception {
 		Connection conn = null;
 		ResultSet rs = null;
 		ArrayList<BoardBean> boards = new ArrayList<BoardBean>();
+		int pageSize = BoardBean.pageSize;
 
 		try {
 			conn = getConnection();
-			rs = conn.createStatement().executeQuery("SELECT * FROM boardt ORDER BY b_ref desc, b_step ASC");
+			rs = conn.createStatement().executeQuery("SELECT COUNT(*) FROM boardt");
+			if(rs.next()) {
+				BoardBean.boardCount = rs.getInt(1);
+			}
+			if (rs != null) {
+				rs.close();
+			}
+			/*
+			 * https://crescentm.tistory.com/406
+			 * conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			 */
+			rs = conn.createStatement().executeQuery(
+					"SELECT * FROM ( SELECT ROW_NUMBER() OVER( ORDER BY b_ref DESC, b_step ASC ) \"B_ORDER\", b.* FROM boardt b ) "
+							+ "WHERE b_order BETWEEN " + ((b_page - 1) * pageSize + 1) + " AND " + (b_page * pageSize));
 
 			while (rs.next()) {
 				BoardBean board = new BoardBean();

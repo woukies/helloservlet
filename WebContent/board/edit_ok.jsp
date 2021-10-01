@@ -9,10 +9,16 @@
 	BoardDBBean manager = BoardDBBean.getInstance();
 	// board.setB_date(new Timestamp(System.currentTimeMillis()));
 	int isEdit = manager.editBoard(board);
+	int b_page;
+	if(request.getParameter("b_page") == null) {
+		b_page = 1;
+	} else {
+		b_page = Integer.parseInt(request.getParameter("b_page"));
+	}
 	
 	switch(isEdit) {
 	case 1:
-		response.sendRedirect("list.jsp");
+		response.sendRedirect("list.jsp?b_page=" + b_page);
 		break;
 	case 0:
 		%>

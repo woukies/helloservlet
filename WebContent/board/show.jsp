@@ -4,6 +4,12 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 <%
+	int b_page;
+	if(request.getParameter("b_page") == null) {
+		b_page = 1;
+	} else {
+		b_page = Integer.parseInt(request.getParameter("b_page"));
+	}
 	int b_id = Integer.parseInt(request.getParameter("b_id"));
 	BoardDBBean manager = BoardDBBean.getInstance();
 	BoardBean board = manager.getBoard(b_id, true);
@@ -44,10 +50,10 @@
 			</tr>
 			<tr height="30">
 				<td colspan="4" align="right">
-					<input type="button" value="글수정" onclick="location.href='edit.jsp?b_id=<%= b_id %>'">
-					<input type="button" value="글삭제" onclick="location.href='delete.jsp?b_id=<%= b_id %>'">
-					<input type="button" value="글답변" onclick="location.href='write.jsp?b_id=<%= b_id %>'">
-   	            	<input type="button" value="글목록" onclick="location.href='list.jsp'">
+					<input type="button" value="글수정" onclick="location.href='edit.jsp?b_id=<%= b_id %>&b_page=<%= b_page %>'">
+					<input type="button" value="글삭제" onclick="location.href='delete.jsp?b_id=<%= b_id %>&b_page=<%= b_page %>'">
+					<input type="button" value="글답변" onclick="location.href='write.jsp?b_id=<%= b_id %>&b_page=<%= b_page %>'">
+   	            	<input type="button" value="글목록" onclick="location.href='list.jsp?b_page=<%= b_page %>'">
 				</td>
 			</tr>
 		</table>

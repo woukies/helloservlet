@@ -3,6 +3,10 @@ package magic.board;
 import java.sql.Timestamp;
 
 public class BoardBean {
+	public static int pageButtons = 4;
+	public static int pageSize = 10;
+	
+	public static int boardCount;
 	private int b_id;
 	private Timestamp b_date;
 	private String b_name;
@@ -13,8 +17,8 @@ public class BoardBean {
 	private String b_pwd;
 	private String b_ip;
 	private int b_ref;
-	private int b_step = 0;
-	private int b_level = 0;
+	private int b_step;
+	private int b_level;
 
 	public int getB_id() {
 		return b_id;

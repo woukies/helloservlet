@@ -3,6 +3,12 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 <%
+	int b_page;
+	if(request.getParameter("b_page") == null) {
+		b_page = 1;
+	} else {
+		b_page = Integer.parseInt(request.getParameter("b_page"));
+	}
 	int b_id = Integer.parseInt(request.getParameter("b_id"));
 	BoardDBBean manager = BoardDBBean.getInstance();
 	BoardBean board = manager.getBoard(b_id, false);	
@@ -20,7 +26,7 @@
     <center>
     	<h1>글 수정하기</h1>
 	    <table>
-	        <form action="edit_ok.jsp" method="POST" name="writeForm">
+	        <form action="edit_ok.jsp?b_page=<%= b_page %>" method="POST" name="writeForm">
 	            <tr height="30">
 	                <td width="80" align="right">작성자</td>
 	                <td width="140"><input type="text" name="b_name" value="<%= board.getB_name() %>" maxlength="20"></td>
@@ -43,7 +49,7 @@
 	                	<input type="hidden" name="b_id" value="<%= b_id %>">
 	                	<input type="button" value="글수정" onclick="check_ok()">
 	                	<input type="reset" value="다시작성">
-	                	<input type="button" value="글목록" onclick="location.href='list.jsp'">
+	                	<input type="button" value="글목록" onclick="location.href='list.jsp?b_page=<%= b_page %>'">
 	                </td>
 	            </tr>
 	        </form>
