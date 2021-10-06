@@ -59,6 +59,11 @@
 						}
 					%>
 					<a href="show.jsp?b_id=<%= board.getB_id() %>&b_page=<%= b_page %>"><%= board.getB_title() %></a>
+					<%
+						if(board.getB_fname() != null) { // board.getB_fsize() > 0
+							%><img src="../res/zip.gif" alt="<%= board.getB_fname() %>"><%
+						}
+					%>
 				</td>
 			<%
 					if (board.getB_email() != null) {

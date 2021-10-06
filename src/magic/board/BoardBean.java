@@ -19,6 +19,8 @@ public class BoardBean {
 	private int b_ref;
 	private int b_step;
 	private int b_level;
+	private String b_fname;
+	private int b_fsize;
 
 	public int getB_id() {
 		return b_id;
@@ -114,5 +116,21 @@ public class BoardBean {
 
 	public void setB_level(int b_level) {
 		this.b_level = b_level;
+	}
+
+	public String getB_fname() {
+		return b_fname;
+	}
+
+	public int getB_fsize() {
+		return b_fsize;
+	}
+
+	public void setB_fname(String b_fname) {
+		this.b_fname = b_fname;
+	}
+
+	public void setB_fsize(int b_fsize) {
+		this.b_fsize = b_fsize;
 	}
 }

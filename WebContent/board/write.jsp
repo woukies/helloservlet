@@ -35,7 +35,7 @@
     <center>
     	<h1>글 올 리 기</h1>
 	    <table>
-	        <form action="write_ok.jsp" method="POST" name="writeForm">
+	        <form action="write_ok.jsp" method="POST" name="writeForm" enctype="multipart/form-data">
 	            <tr height="30">
 	                <td width="80" align="right">작성자</td>
 	                <td width="140"><input type="text" name="b_name" maxlength="20"></td>
@@ -45,6 +45,10 @@
 	            <tr height="30">
 	                <td width="80" align="right">글제목</td>
 	                <td colspan="3"><input type="text" name="b_title" value="<%= b_title %>" size="60" maxlength="80"></td>
+	            </tr>
+	            <tr height="30">
+	                <td width="80" align="right">파일</td>
+	                <td colspan="3"><input type="file" name="b_fname" size="40"></td>
 	            </tr>
 	            <tr>
 	                <td colspan="4"><textarea name="b_content" rows="20" cols="70"></textarea></td>

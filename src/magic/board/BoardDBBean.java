@@ -61,19 +61,21 @@ public class BoardDBBean {
 			}
 
 			pstmt = conn.prepareStatement(
-					"INSERT INTO boardt (b_id, b_name, b_email, b_title, b_content, b_date, b_pwd, b_ip, b_ref, b_step, b_level) "
-							+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+					"INSERT INTO boardt (b_id, b_name, b_email, b_title, b_content, b_date, b_pwd, b_ip, b_ref, b_step, b_level, b_fname, b_fsize) "
+							+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 			pstmt.setInt(1, boardNumber);
-			pstmt.setString(2, HanConv.toKor(board.getB_name()));
+			pstmt.setString(2, board.getB_name());
 			pstmt.setString(3, board.getB_email());
-			pstmt.setString(4, HanConv.toKor(board.getB_title()));
-			pstmt.setString(5, HanConv.toKor(board.getB_content()));
+			pstmt.setString(4, board.getB_title());
+			pstmt.setString(5, board.getB_content());
 			pstmt.setTimestamp(6, board.getB_date());
 			pstmt.setString(7, board.getB_pwd());
 			pstmt.setString(8, board.getB_ip());
 			pstmt.setInt(9, boardRef);
 			pstmt.setInt(10, board.getB_step());
 			pstmt.setInt(11, board.getB_level());
+			pstmt.setString(12, board.getB_fname());
+			pstmt.setInt(13, board.getB_fsize());
 			pstmt.executeUpdate();
 
 			isInsert = 1;
@@ -136,6 +138,8 @@ public class BoardDBBean {
 				board.setB_ref(rs.getInt("b_ref"));
 				board.setB_step(rs.getInt("b_step"));
 				board.setB_level(rs.getInt("b_level"));
+				board.setB_fname(rs.getString("b_fname"));
+				board.setB_fsize(rs.getInt("b_fsize"));
 
 				boards.add(board);
 			}
@@ -183,6 +187,8 @@ public class BoardDBBean {
 				board.setB_ref(rs.getInt("b_ref"));
 				board.setB_step(rs.getInt("b_step"));
 				board.setB_level(rs.getInt("b_level"));
+				board.setB_fname(rs.getString("b_fname"));
+				board.setB_fsize(rs.getInt("b_fsize"));
 
 				int b_hit = rs.getInt("b_hit");
 				if (doHit) {

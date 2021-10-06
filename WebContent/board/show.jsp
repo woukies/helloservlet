@@ -14,6 +14,23 @@
 	BoardDBBean manager = BoardDBBean.getInstance();
 	BoardBean board = manager.getBoard(b_id, true);
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+	
+	String fileSizeUnit = null;
+	if (board.getB_fsize() > 0) {
+		String[] sizeUnit = { "Bytes", "KB", "MB", "GB", "TB" };
+		int fileSize = board.getB_fsize();
+		for (int i = 0; i < sizeUnit.length; i++) {
+			if(fileSize > 1024) {
+				fileSize /= 1024;
+			} else {
+				fileSizeUnit = fileSize + sizeUnit[i];
+				break;
+			}
+		}
+		if (fileSizeUnit == null) {
+			fileSizeUnit = fileSize + "PB";
+		}
+	}
 %>
 <!DOCTYPE html>
 <html>
@@ -41,6 +58,14 @@
 				<th>累己老</th>
 				<td><%= board.getB_date() != null ? sdf.format(board.getB_date()) : "-" %></td>
 			</tr>
+			<% if (board.getB_fsize() > 0) { %>
+			<tr height="30" align="center">
+				<th>颇老</th>
+				<td colspan="3">
+					<img src="../res/zip.gif"> <a href="../files/<%= board.getB_fname() %>"><%= board.getB_fname() %>(<%= fileSizeUnit %>)</a>
+				</td>
+			</tr>
+			<% } %>
 			<tr height="30" align="center">
 				<th>臂 力格</th>
 				<td colspan="3" align="left"><%= board.getB_title() %></td>
