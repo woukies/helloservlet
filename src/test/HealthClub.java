@@ -75,6 +75,7 @@ public class HealthClub {
 			}
 		}
 
+		printMenu(2);
 		scanner.close();
 	}
 
@@ -107,6 +108,11 @@ public class HealthClub {
 			printLine("일반회원 정보관리");
 			System.out.println("11. 일반회원 정보입력 | 22. 일반회원 정보삭제 | 33. 일반회원 정보확인 | 0. 이전단계");
 			break;
+		case 2:
+			printLine("");
+			printLine("헬스클럽 회원관리 프로그램을 종료합니다.");
+			printLine("");
+			return;
 		default:
 			System.out.println("올바른 메뉴를 선택해 주세요. ");
 		}
