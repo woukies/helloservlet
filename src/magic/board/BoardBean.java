@@ -21,6 +21,7 @@ public class BoardBean {
 	private int b_level;
 	private String b_fname;
 	private int b_fsize;
+	private String b_rfname;
 
 	public int getB_id() {
 		return b_id;
@@ -132,5 +133,13 @@ public class BoardBean {
 
 	public void setB_fsize(int b_fsize) {
 		this.b_fsize = b_fsize;
+	}
+
+	public String getB_rfname() {
+		return b_rfname;
+	}
+
+	public void setB_rfname(String b_rfname) {
+		this.b_rfname = b_rfname;
 	}
 }

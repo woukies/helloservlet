@@ -58,11 +58,11 @@
 				<th>累己老</th>
 				<td><%= board.getB_date() != null ? sdf.format(board.getB_date()) : "-" %></td>
 			</tr>
-			<% if (board.getB_fsize() > 0) { %>
+			<% if (board.getB_fname() != null) { %>
 			<tr height="30" align="center">
-				<th>颇老</th>
+				<th>梅何颇老</th>
 				<td colspan="3">
-					<img src="../res/zip.gif"> <a href="../files/<%= board.getB_fname() %>"><%= board.getB_fname() %>(<%= fileSizeUnit %>)</a>
+					<img src="../res/zip.gif"> <a href="FileDownload.jsp?b_id=<%= b_id %>"><%= board.getB_rfname() %>(<%= fileSizeUnit %>)</a>
 				</td>
 			</tr>
 			<% } %>

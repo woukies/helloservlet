@@ -61,8 +61,9 @@ public class BoardDBBean {
 			}
 
 			pstmt = conn.prepareStatement(
-					"INSERT INTO boardt (b_id, b_name, b_email, b_title, b_content, b_date, b_pwd, b_ip, b_ref, b_step, b_level, b_fname, b_fsize) "
-							+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+					"INSERT INTO boardt "
+					+ "(b_id, b_name, b_email, b_title, b_content, b_date, b_pwd, b_ip, b_ref, b_step, b_level, b_fname, b_fsize, b_rfname) "
+					+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 			pstmt.setInt(1, boardNumber);
 			pstmt.setString(2, board.getB_name());
 			pstmt.setString(3, board.getB_email());
@@ -76,6 +77,7 @@ public class BoardDBBean {
 			pstmt.setInt(11, board.getB_level());
 			pstmt.setString(12, board.getB_fname());
 			pstmt.setInt(13, board.getB_fsize());
+			pstmt.setString(14, board.getB_rfname());
 			pstmt.executeUpdate();
 
 			isInsert = 1;
@@ -189,6 +191,7 @@ public class BoardDBBean {
 				board.setB_level(rs.getInt("b_level"));
 				board.setB_fname(rs.getString("b_fname"));
 				board.setB_fsize(rs.getInt("b_fsize"));
+				board.setB_rfname(rs.getString("b_rfname"));
 
 				int b_hit = rs.getInt("b_hit");
 				if (doHit) {
@@ -308,5 +311,43 @@ public class BoardDBBean {
 		}
 
 		return isEdit;
+	}
+	
+	public BoardBean getFileName (int b_id) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		BoardBean board = null;
+		
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement("SELECT b_fname, b_rfname FROM boardt WHERE b_id = ?");
+			pstmt.setInt(1, b_id);
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				board = new BoardBean();
+				board.setB_fname(rs.getString("b_fname"));
+				board.setB_rfname(rs.getString("b_rfname"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return board;
 	}
 }
